@@ -52,10 +52,26 @@ class Grid(dimensionLength: Int) {
         sumOfVolume((x-1, y2, z-1)) - sumOfVolume((x-1, y-1, z-1)))
   }
 
+  private def validateInputRange(x: Int, y: Int, z: Int): Unit = {
+    require(x > 0 && x <= dimensionLength && y > 0 && y <= dimensionLength &&
+      z > 0 && z <= dimensionLength, throw new DimensionNotWithinRange("dimension not within range"))
+  }
+  
   // public methods to expose vector of vectors of vectors grid as non-zero indexed, starting at (1,1,1)
   def update(x: Int, y: Int, z: Int, value: Long)
-    = updateVector(x-1,y-1,z-1,value)
+    = {
+    validateInputRange(x,y,z)
+    updateVector(x-1,y-1,z-1,value)
+  }
 
   def query(x: Int, y: Int, z: Int, x2: Int, y2: Int, z2: Int)
-    = queryVector(x-1,y-1,z-1,x2-1,y2-1,z2-1)
+    = {
+    validateInputRange(x,y,z)
+    validateInputRange(x2,y2,z2)
+    queryVector(x-1,y-1,z-1,x2-1,y2-1,z2-1)
+  }
+
+
+
+  def dim = dimensionLength
 }
