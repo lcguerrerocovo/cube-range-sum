@@ -1,5 +1,26 @@
 ## Cube Range Sum calculator API
 
+The approach taken to solve the problem of summing the intensities of a specific range of 
+'voxels' (voxels are basically pixels but in 3D space) was by using the [Summed Area Table](https://en.wikipedia.org/wiki/Summed_area_table) method
+and extrapolating it for the 3 dimensional case. This way we take advantage of the sums being
+composed of other sums of parts of the cube to code up a recursive solution which is efficient
+since it makes use of meoization to eliminate the need for redudant computations. Whenever a voxel
+is updated, the other sums in the meoization cache that are affected by that change need to be invalidated 
+and the previous sum is simply changed based on how the intensity in the voxel being updated changes. This
+means that the computation is spread between the updates and the queries and regarding the queries 
+only 8 array references need to be made to figure out the sum of the range.
+
+* References to meoized function calls to compute sum of range
+
+```scala
+private def queryVector(x: Int, y: Int, z: Int, x2: Int, y2: Int, z2: Int): Long = {
+      (sumOfVolume((x2, y2, z2)) - sumOfVolume((x2, y-1, z2)) - sumOfVolume((x-1, y2, z2)) -
+        sumOfVolume((x2, y2, z-1)) + sumOfVolume((x-1, y-1, z2)) + sumOfVolume((x2, y-1, z-1)) +
+        sumOfVolume((x-1, y2, z-1)) - sumOfVolume((x-1, y-1, z-1)))
+  }
+```
+
+![Summed Volume Cube](https://cloud.githubusercontent.com/assets/1668681/23099050/aa0a678e-f62b-11e6-8c5b-92c4e5117946.JPG)
 
 ### Running via console
 
