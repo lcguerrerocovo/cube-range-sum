@@ -95,3 +95,47 @@ sbt run
 ```
 
 Server will run on port **8081**
+
+####Example queries:
+
+#####Creating a Grid with dimensionLength 20
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{
+  "dimensionLength" : 20
+}' "http://localhost:8081/grids"
+```
+
+```json
+{
+  "id": "68059693-e17a-4192-bc89-503da2d61087",
+  "dimensionLength": 20
+}
+```
+
+#####Updating intensity of 'voxel' of grid with id '68059693-e17a-4192-bc89-503da2d61087' in position (2,2,2) to 4
+
+```
+curl -X PATCH -H "Content-Type: application/json" '{
+  "dimensionLength" : 20
+}' "http://localhost:8081/grids/68059693-e17a-4192-bc89-503da2d61087/values?x=2&y=2&z=2&value=4"
+```
+
+```json
+{
+  "msg": "grid 68059693-e17a-4192-bc89-503da2d61087updated succesfuly"
+}
+```
+
+##### Querying grid with id '68059693-e17a-4192-bc89-503da2d61087' for sum of intensities of 'voxels' in between (1,1,1) and (3,3,3) 
+
+```
+curl -X GET -H "Content-Type: application/json" "http://localhost:8081/grids/68059693-e17a-4192-bc89-503da2d61087/sums?x=1&y=1&z=1&x2=3&y2=3&z2=3"
+
+```
+
+```json
+{
+  "result": 4
+}
+```

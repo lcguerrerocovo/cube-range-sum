@@ -40,7 +40,7 @@ object Server extends TwitterServer {
 
     Grid.gridMap.get(id.toString)
       .getOrElse(throw new GridNotFound(id.toString)).update(x,y,z,value)
-    Ok(MessageResource("grid " + id.toString + "updated succesfuly"))
+    Ok(MessageResource("grid " + id.toString + " updated successfully"))
   }
 
   def getSums: Endpoint[SumsResource]
