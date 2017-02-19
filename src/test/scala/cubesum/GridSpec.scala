@@ -1,14 +1,18 @@
 package cubesum
 
-import org.scalatest.{FlatSpec, Matchers}
+import java.util.concurrent.ThreadLocalRandom
+
+import org.scalacheck.Gen
+import org.scalatest.{FlatSpec, Matchers, PrivateMethodTester}
 
 /**
   * Created by luisguerrero
   */
-class GridSpec extends FlatSpec with Matchers {
-  
+class GridSpec extends FlatSpec with Matchers with PrivateMethodTester {
 
- it should "change output of sum when grid is updated" in {
+  import Util._
+
+  it should "change output of sum when grid is updated" in {
     val grid = Grid(10)
 
     grid.query(1,1,1,10,10,10) should equal (0L)
@@ -59,5 +63,18 @@ class GridSpec extends FlatSpec with Matchers {
     grid.query(1,1,1,1,1,1) should equal (0L)
     grid.query(1,1,1,2,2,2) should equal (1L)
     grid.query(2,2,2,2,2,2) should equal (1L)
+  }
+
+  it should "respond with same sum as brute force method" in {
+    val n = Gen.choose(1, 50).sample.get
+    val grid = Grid(n)
+
+    for (i <- 1 to 25; x = rand(n); y = rand(n); z = rand(n)
+    ) yield grid.update(x,y,z,rand(100))
+
+    val bruteForce = PrivateMethod[Long]('bruteForceSum)
+
+    time {grid.query(1,1,1,n,n,n)} should
+      equal (time {grid invokePrivate bruteForce((n-1,n-1,n-1))})
   }
 }

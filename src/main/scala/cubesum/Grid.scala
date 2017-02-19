@@ -32,6 +32,17 @@ class Grid(dimensionLength: Int) {
     }
   }
 
+  // **disclaimer**
+  // this method is only for testing purposes
+  // not used in actual implementation
+  private def bruteForceSum(xyz: (Int,Int,Int)): Long = {
+    (for {
+      i <- 0 to xyz._1
+      j <- 0 to xyz._2
+      k <- 0 to xyz._3
+    } yield grid(i)(j)(k)).sum
+  }
+
   private def getVolume(pos: (Int,Int,Int), f: ((Int,Int,Int)) => Long)
     = cache getOrElseUpdate (pos, f(pos))
   

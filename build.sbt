@@ -16,7 +16,6 @@ libraryDependencies  ++= Seq(
   "com.github.finagle" %% "finch-circe" % "0.12.0",
   "io.circe" %% "circe-generic" % "0.7.0",
   "io.circe" %% "circe-parser" % "0.7.0",
-  "com.typesafe.akka" %% "akka-actor" % "2.3.4",
   "org.scalactic" %% "scalactic" % "3.0.1",
   "org.scalatest" %% "scalatest" % "3.0.1" % "test",
   "org.scalacheck" %% "scalacheck" % "1.13.4" % "test"
@@ -26,3 +25,7 @@ libraryDependencies  ++= Seq(
 logLevel := Level.Debug
 
 scalacOptions += "-deprecation"
+
+mainClass in (Compile, run) := Some("cubesum.Server")
+
+

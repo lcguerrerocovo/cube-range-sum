@@ -3,11 +3,8 @@ package cubesum
 import java.nio.charset.StandardCharsets
 
 import io.circe.generic.auto._
-import io.finch._
 import io.finch.circe._
 import com.twitter.finagle.http.Status
-import com.twitter.io.Buf
-import cubesum.Server.patchValues
 import io.finch.{Application, Input}
 import org.scalatest.prop.Checkers
 import org.scalatest.{FlatSpec, Matchers}
@@ -25,7 +22,7 @@ class ServerSpec extends FlatSpec with Matchers with Checkers  {
   case class GridWithoutId(dimensionLength: Int)
 
   // generating random integer
-  def genGridWithoutId: Gen[GridWithoutId] = GridWithoutId(Gen.choose(1, 100).sample.getOrElse(1))
+  def genGridWithoutId: Gen[GridWithoutId] = GridWithoutId(Gen.choose(1, 10).sample.getOrElse(1))
 
   implicit def arbitraryGridWithoutId: Arbitrary[GridWithoutId] = Arbitrary(genGridWithoutId)
 
