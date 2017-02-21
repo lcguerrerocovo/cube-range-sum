@@ -116,7 +116,7 @@ curl -X POST -H "Content-Type: application/json" -d '{
 #####Updating intensity of 'voxel' of grid with id '68059693-e17a-4192-bc89-503da2d61087' in position (2,2,2) to 4
 
 ```
-curl -X PATCH -H "Content-Type: application/json" '{
+curl -X PATCH -H "Content-Type: application/json" -d '{
   "dimensionLength" : 20
 }' "http://localhost:8081/grids/68059693-e17a-4192-bc89-503da2d61087/values?x=2&y=2&z=2&value=4"
 ```
@@ -138,4 +138,34 @@ curl -X GET -H "Content-Type: application/json" "http://localhost:8081/grids/680
 {
   "result": 4
 }
+```
+
+### Building
+
+This sbt project makes use of the sbt assembly plugin to build a jar with all required artifacts
+
+```
+sbt assembly
+```
+
+you can then run the jar like so
+
+```
+java -jar target/scala-2.11/cube-range-sum-assembly-1.0.jar
+```
+
+### Docker
+
+You can build you own docker image from this project, first take care to run the clean task
+
+```
+sbt clean
+docker build --no-cache -t your-name-here/cube-range-sum .
+```
+
+I also pushed an image to my docker repository you can pull it and run a container like so
+
+```
+docker pull luiscaguerrero/cube-range-sum
+docker run -d -p 8081:8081 luiscaguerrero/cube-range-sum
 ```
