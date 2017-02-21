@@ -63,8 +63,8 @@ class ServerSpec extends FlatSpec with Matchers with Checkers  {
     val input = Input.patch(s"/grids/$id/values?x=$x&y=$y&z=$z&value=$value")
 
     patchValues(input).awaitValueUnsafe() shouldBe
-      Some(MessageResource("grid " + id + "updated succesfuly"))
-    Grid.gridMap.get(id).get.query(x,y,z,x,y,z) shouldBe value
+      Some(MessageResource("grid " + id + " updated successfully"))
+    Grid.gridMap.get(id).get.query(x,y,z,x,y,z) shouldBe (value)
   }
 
   it should "fail to update a grid's values if dimensions not in valid range" in {
